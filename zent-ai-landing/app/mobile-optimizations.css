@@ -1,0 +1,99 @@
+/* Optimizaciones específicas para móviles */
+@media (max-width: 768px) {
+  /* Reducir complejidad de transformaciones */
+  * {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+
+  /* Optimizar animaciones para GPU */
+  .motion-safe\:animate-pulse,
+  .motion-safe\:animate-bounce,
+  [data-framer-motion] {
+    will-change: transform, opacity;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+  }
+
+  /* Reducir blur en móviles para mejor performance */
+  .blur-3xl {
+    filter: blur(20px) !important;
+  }
+
+  /* Simplificar gradientes en móviles */
+  .bg-gradient-to-br,
+  .bg-gradient-to-r {
+    background-attachment: scroll !important;
+  }
+
+  /* Optimizar scroll performance */
+  .overflow-hidden {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Reducir sombras complejas */
+  .shadow-md,
+  .shadow-lg {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+  }
+}
+
+/* Optimizaciones para dispositivos de baja gama */
+@media (max-width: 480px) {
+  /* Desactivar animaciones complejas */
+  .motion-reduce\:animate-none {
+    animation: none !important;
+  }
+
+  /* Simplificar efectos visuales */
+  .backdrop-blur-md {
+    backdrop-filter: none !important;
+    background-color: rgba(17, 24, 39, 0.8) !important;
+  }
+
+  /* Reducir complejidad de bordes */
+  .rounded-full {
+    border-radius: 8px !important;
+  }
+
+  /* Optimizar tipografía */
+  .text-6xl,
+  .text-7xl {
+    font-size: 2.5rem !important;
+    line-height: 1.2 !important;
+  }
+}
+
+/* Respeto por prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Mantener solo animaciones esenciales */
+  .motion-safe\:animate-pulse,
+  .motion-safe\:animate-bounce {
+    animation: none !important;
+  }
+}
+
+/* Optimizaciones para conexiones lentas */
+@media (prefers-reduced-data: reduce) {
+  /* Reducir efectos visuales costosos */
+  .blur-3xl,
+  .backdrop-blur-md {
+    filter: none !important;
+    backdrop-filter: none !important;
+  }
+
+  /* Simplificar gradientes */
+  .bg-gradient-to-br,
+  .bg-gradient-to-r {
+    background: linear-gradient(45deg, #1f2937, #111827) !important;
+  }
+}
